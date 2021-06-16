@@ -142,13 +142,57 @@ Falhas: ocorrem quando o teste é executado sem problemas, porém, alguma condi�
 
 Erros: um erro acontece quando algum problema durante a execução do teste impede que o mesmo seja concluído, ou seja, quando ocorre alguma exceção não esperada e não tratada.
 
-### Formas de tratamento de erros
+### Aulas 9 e 10 - Formas de tratamento de erros
 
 Resumo das 3 formas (elegante, robusta e nova).
 
 - Elegante: funciona bem quando apenas a exceção importa. Precisa tentar garantir que a exceção vem apenas por um motivo. Não se consegue obter a mensagem da exceção.
 - Robusta (forma completa): permite um controle maior sobre a exec do teste, que a forma elegante não dá. A vantagem aqui é que o try ... catch trata o erro e o fluxo do code continua. Há casos em que essa forma é necessária, como quando se usa com Mocks.
 - Nova: atende na maioria dos casos (mas há casos em que somente a forma robusta vai ajudar).
+
+## Aula 11 - Before e After
+
+Exemplo de um contador de @Test.
+
+```
+...
+   private LocacaoService service;
+
+    // Def do contador
+    public static int countTests = 0; // Se não for static, o JUnit irá reinicializar o valor a cada @Test
+
+    // Utilizacao das rules para que colete todos os erros e apresente todos de uma vez só
+
+    @Rule public ErrorCollector error = new ErrorCollector();
+
+    // Rule para a forma nova
+    @Rule public ExpectedException exception = ExpectedException.none();
+
+    // Aula 11 - Before e After
+    @Before public void setup() {
+        System.out.println("Before");
+        service = new LocacaoService(); // instancia da classe que quero testar
+        // Essa instancia será aplicada antes de cada @Test
+
+        countTests++;
+        System.out.println("countTests: " + countTests);
+    }
+
+    @After public void tearDown() {
+        System.out.println("After");
+    }
+
+    // BeforeClass executa apenas uma vez antes da classe ser instanciada
+    @BeforeClass public static void setupClass() {
+        System.out.println("Before class");
+    }
+
+    // AfterClass executa apenas uma vez depois da classe ser instanciada
+    @AfterClass public static void tearDownClass() {
+        System.out.println("After class");
+    }
+...
+```
 
 ## Andamento
 

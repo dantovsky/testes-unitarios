@@ -194,9 +194,17 @@ Exemplo de um contador de @Test.
 ...
 ```
 
+## Aula 13 - Desafio
+
+Nova regra: "Alugar mais que um filme por vez"
+Alterações em:
+- Locacao
+- LocacaoService
+- LocacaoServiceTest
+
 ## Andamento
 
-Parei na aula 9 - Tratamento de exceções, parte 1
+Parei na aula 13 - Desafio
 https://www.udemy.com/course/testes-unitarios-em-java/learn/lecture/6994632#overview
 
 Minuto: 00:00

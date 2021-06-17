@@ -5,13 +5,13 @@ import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.exceptions.FilmeSemEstoqueException;
 import br.ce.wcaquino.exceptions.LocadoraException;
-import br.ce.wcaquino.utils.DataUtils;
-import org.hamcrest.CoreMatchers;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static br.ce.wcaquino.utils.DataUtils.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,41 +23,48 @@ public class LocacaoServiceTest {
 
     // Utilizacao das rules para que colete todos os erros e apresente todos de uma vez só
 
-    @Rule public ErrorCollector error = new ErrorCollector();
+    @Rule
+    public ErrorCollector error = new ErrorCollector();
 
     // Rule para a forma nova
-    @Rule public ExpectedException exception = ExpectedException.none();
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     // Aula 11 - Before e After
-    @Before public void setup() {
+    @Before
+    public void setup() {
         System.out.println("Before");
         service = new LocacaoService(); // instancia da classe que quero testar
         // Essa instancia será aplicada antes de cada @Test
     }
 
-    @After public void tearDown() {
+    @After
+    public void tearDown() {
         System.out.println("After");
     }
 
     // BeforeClass executa apenas uma vez antes da classe ser instanciada
-    @BeforeClass public static void setupClass() {
+    @BeforeClass
+    public static void setupClass() {
         System.out.println("Before class");
     }
 
     // AfterClass executa apenas uma vez depois da classe ser instanciada
-    @AfterClass public static void tearDownClass() {
+    @AfterClass
+    public static void tearDownClass() {
         System.out.println("After class");
     }
 
-    @Test public void testeLocacao() throws Exception {
+    @Test
+    public void testeLocacao() throws Exception {
         // public static void main(String[] args) {
 
         // Cenario :: inicializar tudo o que precisamos
         Usuario usuario = new Usuario("Usuario 1");
-        Filme filme = new Filme("Filme 1", 1, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 1, 5.0));
 
         // Acao :: execução metodo que quero testar
-        Locacao locacao = service.alugarFilme(usuario, filme);
+        Locacao locacao = service.alugarFilme(usuario, filmes);
 
         // Sem utilização do Rule
 
@@ -94,28 +101,30 @@ public class LocacaoServiceTest {
     // Forma 1: "elegante" => funciona bem quando apenas a exceção importa.
     // Precisa tentar garantir que a exceção vem apenas por um motivo.
     // Não se consegue obter a mensagem da exceção.
-    @Test(expected = Exception.class) public void testLocacao_filmeSemEstoque() throws Exception {
+    @Test(expected = Exception.class)
+    public void testLocacao_filmeSemEstoque() throws Exception {
 
         // Cenario :: inicializar tudo o que precisamos
         Usuario usuario = new Usuario("Usuario 1");
-        Filme filme = new Filme("Filme 1", 0, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 0, 5.0));
 
         // Acao :: execução metodo que quero testar
-        service.alugarFilme(usuario, filme);
+        service.alugarFilme(usuario, filmes);
     }
 
     // Forma 2: "robusta" (forma completa) => permite um controle maior sobre a exec do teste, que a forma elegante não dá
     // A vantagem aqui é que o try ... catch trata o erro e o fluxo do code continua.
     // Há casos em que essa forma é necessária, como quando se usa com Mocks.
-    @Test public void testLocacao_filmeSemEstoque2() { // ??? Não entendi!!! (aula 9)
+    @Test
+    public void testLocacao_filmeSemEstoque2() { // ??? Não entendi!!! (aula 9)
 
         // Cenario :: inicializar tudo o que precisamos
         Usuario usuario = new Usuario("Usuario 1");
-        Filme filme = new Filme("Filme 1", 2, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 2, 5.0));
 
         // Acao :: execução metodo que quero testar
         try {
-            service.alugarFilme(usuario, filme);
+            service.alugarFilme(usuario, filmes);
             // Assert.fail("Deveria ter lançado uma exceção");
         } catch (Exception e) {
             // Alem de capturar a exceção, podemos também verificar a mensagem que vem da exceção
@@ -124,29 +133,31 @@ public class LocacaoServiceTest {
     }
 
     // Forma 3: "forma nova" => atende na maioria dos casos (mas há casos em que somente a forma robusta vai ajudar)
-    @Test public void testLocacao_filmeSemEstoque3() throws Exception {
+    @Test
+    public void testLocacao_filmeSemEstoque3() throws Exception {
 
         // Cenario :: inicializar tudo o que precisamos
         Usuario usuario = new Usuario("Usuario 1");
-        Filme filme = new Filme("Filme 1", 0, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 0, 5.0));
 
         exception.expect(Exception.class);
         exception.expectMessage("Filme sem estoque");
 
         // Acao :: execução metodo que quero testar
-        service.alugarFilme(usuario, filme);
+        service.alugarFilme(usuario, filmes);
 
     }
 
     // Utilizando a forma robusta
-    @Test public void testLocacao_usuarioVazio() throws FilmeSemEstoqueException {
+    @Test
+    public void testLocacao_usuarioVazio() throws FilmeSemEstoqueException {
 
         // cenario
-        Filme filme = new Filme("Filme 2", 1, 4.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 2", 1, 4.0));
 
         // acao
         try {
-            service.alugarFilme(null, filme);
+            service.alugarFilme(null, filmes);
             Assert.fail(); // porque está a suar a forma robusta
         } catch (LocadoraException e) {
             assertThat(e.getMessage(), is("Usuario vazio"));
@@ -156,7 +167,8 @@ public class LocacaoServiceTest {
     }
 
     // Utilizando a forma nova
-    @Test public void testLocacao_FilmeVazio() throws FilmeSemEstoqueException, LocadoraException {
+    @Test
+    public void testLocacao_FilmeVazio() throws FilmeSemEstoqueException, LocadoraException {
 
         // Cenario
         Usuario usuario = new Usuario("Usuario 1");

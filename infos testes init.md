@@ -202,9 +202,109 @@ Alterações em:
 - LocacaoService
 - LocacaoServiceTest
 
+## Aula 14 - TDD - Test Driven Development
+
+O normal é fazerem:
+1. Código
+2. Teste
+3. Refatoração
+
+No TDD, temos uma mudança de pensamento. Partimos 1º para a implementação dos testes.
+1. Teste
+2. Código
+3. Refatoração
+
+Este é um ciclo conhecido como "RED -> GREEN -> REFACTOR".
+![Red Green Refactor](imagens/red-green-refactor.png)
+
+- RED: simboliza quando crio um teste, sem implementação, ou seja, ao executar o teste, irá falhar.
+   - Deve sempre executar para certificar que o teste não está passando, pois pode ser que o teste esteja gerando falso-positivos.
+   - Pode ter casos em que o teste vai passar, e ele realmente está correto. Então quer dizer que não precisa mais de código algum, esse cenário já está implementado. É o mínimo possível.
+    
+Alguns motivos pelo qual devs não usam TDD:
+- Curva de aprendizado: não é tão trivial quebrar algumas funcionalidadees em pequenos implementos isso requer prática
+- O TDD não acelera o desenvolvimento, pois o resorto só virá em fases mais avançadas do projeto.
+
+Exemplo: app da calculadora.
+
+1º passo: criação da CalculadoraTest
+````java
+package br.ce.wcaquino.servicos;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class CalculadoraTest {
+
+    @Test
+    public void deveSomarDoisValores() {
+        // cenário
+        int a = 5;
+        int b = 3;
+        Calculadora calc = new Calculadora();
+
+        // acao
+        int resultado = calc.somar(a, b);
+
+        // verificacao
+        Assert.assertEquals(8, resultado);
+    }
+}
+````
+
+2º passo: criar a classe principal com o 1º comportamento na classe.
+O dev foi feito passo a passo até que a funcionalidade de soma() da calculadora
+que estava definida através do teste passou a funcionar.
+
+(!) Tomar o cuidado de não criar mais código do que é necessário.
+```java
+package br.ce.wcaquino.servicos;
+
+public class Calculadora {
+
+    public int somar(int a, int b) {
+        return a + b;
+    }
+}
+```
+
+# Aula 16 - TDD "Não deve devolver filmes no domingo"
+
+1º Passo:
+- criar um teste em que evidencie o problema.
+- em seguida, basta escrever o teste necessário para o teste passar
+
+Assume => possibilidade de criar uma condição de checagem para decidir se o @Test vai ser executado ou não.
+
+Ex: no trecho de code a seguir, o teste só executa se o dia atual for um sábado.
+````java
+@Test
+    public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmeSemEstoqueException, LocadoraException {
+
+        // Checagem dinâmica: esse teste só irá correr se for sábado
+        Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+
+        // cenario
+        Usuario usuario = new Usuario();
+        List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 2, 4.0));
+
+        // acao
+        Locacao retorno = service.alugarFilme(usuario, filmes);
+
+        // verificacao
+        boolean ehSegunda = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
+        Assert.assertTrue(ehSegunda);
+    }
+````
+
+## Aula 18 - Testes parametrizáveis
+
+DDT :: Data Driven Test (teste orientado a dados)
+
+
 ## Andamento
 
-Parei na aula 13 - Desafio
+Parei na aula 16 - TDD
 https://www.udemy.com/course/testes-unitarios-em-java/learn/lecture/6994632#overview
 
 Minuto: 00:00

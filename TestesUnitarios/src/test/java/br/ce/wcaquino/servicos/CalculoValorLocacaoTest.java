@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import javax.crypto.spec.PSource;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -77,6 +78,8 @@ public class CalculoValorLocacaoTest {
 
         // verificacao => Edx calculo para 5 filmes: 4+4+3+2+1 = 14
         assertThat(resultado.getValor(), is(valorLocacao));
+
+        System.out.println("!");
     }
 
     @Test

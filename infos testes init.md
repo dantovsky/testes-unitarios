@@ -385,6 +385,13 @@ public class CalculoValorLocacaoTest {
     }
 }
 ```
+
+## Aula 19 - Matchers Próprios
+
+Criar por exemplo:  
+assertThat(locacao.getDataRetorno(), caiEm(Calendar.MONDAY));  
+assertThat(locacao.getDataRetorno(), caiNumaSegunda());  
+
 ## Andamento
 
 Parei na aula 16 - TDD

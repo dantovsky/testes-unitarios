@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * esta será também executada, então alguns testes irão correr duas vezes.
  */
 
-@RunWith(Suite.class)
+// @RunWith(Suite.class) // Uncomment to run this suite test
 @Suite.SuiteClasses({
     CalculadoraTest.class,
     CalculoValorLocacaoTest.class,

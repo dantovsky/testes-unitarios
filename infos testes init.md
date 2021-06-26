@@ -433,7 +433,55 @@ public class SuiteExecucao {
         System.out.println("after SuiteExecucao");
     }
 }
+```
 
+## Aula 22 - Databilders :: Criação de dados para os testes
+
+Lib BuilderMaster, criada pelo professor Aquino.
+Objetivos: automatizar a criação de builders (para  não precizar fazê-los manualmente)
+Utiliza a classe utiliza a API Refletions, do Java, para identificar todos os elementos.
+Link: https://github.com/wcaquino/BuilderMaster
+
+## Análise de Cobertura
+
+Duas métricas que se pode extratir a partir da execução dos testes unitários:
+- percentual de aceitação dos testes
+    Testes executados com sucesso / divididos pela quantidade de testes executados no geral
+- percentual de cobertura de código
+    Para este, necessita de uma ferramenta extra: plugins (ou Marketplace) => Eclemma
+
+Notas:
+100% de cobertura não significa que o código está 100% testado,
+muito menos que o código está 100% livre de erros.
+Ex: Calculadora :: método divide(String a, String b) que recebe duas Strings
+e realizam a divisão corretamente, mas vai falhar se dividir por zero ou
+se receber alguma letra.
+
+Calculadora
+```java
+public int divide(String a, String b) {
+    return Integer.valueOf(a) / Integer.valueOf(b);
+}
+```
+
+CalculadoraTest
+```java
+@Test
+public void deveDividir_Strings() {
+    String a = "6";
+    String b = "3";
+
+    int resultado = calc.divide(a, b);
+    Assert.assertEquals(2, resultado);
+}
+```
+Coberturas de testes não deve ser utilizado para medir a qualidade do código.
+É importante utilizar coberturas de teste para analizar as linhas vermelhas (as que não estão recebendo cobertura)
+
+## Git
+
+```
+git add . && git commit -m "Aula 24 - Implementações até a aula de Cobertura de Testes."
 ```
 
 ## Andamento

@@ -64,4 +64,13 @@ public class CalculadoraTest {
 
         // Assert.assertEquals(2, resultado);
     }
+
+    @Test
+    public void deveDividir_Strings() {
+        String a = "6";
+        String b = "3";
+
+        int resultado = calc.divide(a, b);
+        Assert.assertEquals(2, resultado);
+    }
 }

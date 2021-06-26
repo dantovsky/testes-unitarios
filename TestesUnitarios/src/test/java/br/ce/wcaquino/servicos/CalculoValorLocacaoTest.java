@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import static br.ce.wcaquino.builders.FilmeBuilder.umFilme;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -46,13 +47,13 @@ public class CalculoValorLocacaoTest {
         // Essa instancia será aplicada antes de cada @Test
     }
 
-    private static Filme filme1 = new Filme("Filme 1", 2, 4.0);
-    private static Filme filme2 = new Filme("Filme 2", 2, 4.0);
-    private static Filme filme3 = new Filme("Filme 3", 2, 4.0);
-    private static Filme filme4 = new Filme("Filme 4", 2, 4.0);
-    private static Filme filme5 = new Filme("Filme 5", 2, 4.0);
-    private static Filme filme6 = new Filme("Filme 6", 2, 4.0);
-    private static Filme filme7 = new Filme("Filme 7", 2, 4.0);
+    private static Filme filme1 = umFilme().agora(); // new Filme("Filme 1", 2, 4.0);
+    private static Filme filme2 = umFilme().agora(); // new Filme("Filme 2", 2, 4.0);
+    private static Filme filme3 = umFilme().agora(); // new Filme("Filme 3", 2, 4.0);
+    private static Filme filme4 = umFilme().agora(); // new Filme("Filme 4", 2, 4.0);
+    private static Filme filme5 = umFilme().agora(); // new Filme("Filme 5", 2, 4.0);
+    private static Filme filme6 = umFilme().agora(); // new Filme("Filme 6", 2, 4.0);
+    private static Filme filme7 = umFilme().agora(); // new Filme("Filme 7", 2, 4.0);
 
     // Definir o conjunto de dados que será testado
     // Informar ao JUnit que esta é a fonte de dados

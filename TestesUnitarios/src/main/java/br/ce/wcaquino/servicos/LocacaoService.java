@@ -1,5 +1,6 @@
 package br.ce.wcaquino.servicos;
 
+import br.ce.wcaquino.daos.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -14,6 +15,8 @@ import java.util.List;
 import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 
 public class LocacaoService {
+
+	private LocacaoDAO dao;
 
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException {
 
@@ -64,9 +67,18 @@ public class LocacaoService {
 		}
 		locacao.setDataRetorno(dataEntrega);
 
-		//Salvando a locacao...
-		//TODO adicionar método para salvar
+		// Salvando a locacao...
+		// O método agora depende da camada de persistência para funcionar.
+		// Soluções:
+		// 1. Implementar a camada de persistência, porém deixaria de ser um teste unitário e passaria a ser um teste de integração.
+		dao.salvar(locacao);
 
 		return locacao;
+	}
+
+	// Fazer a injeção de dependência do DAO
+	// Assim o LocacaoService estará povoado com uma estancia de DAO fake
+	public void setLocacaoDAO(LocacaoDAO dao) {
+		this.dao = dao;
 	}
 }

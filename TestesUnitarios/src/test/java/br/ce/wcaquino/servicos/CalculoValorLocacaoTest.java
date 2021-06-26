@@ -1,5 +1,7 @@
 package br.ce.wcaquino.servicos;
 
+import br.ce.wcaquino.daos.LocacaoDAO;
+import br.ce.wcaquino.daos.LocacaoDAOFake;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -43,8 +45,9 @@ public class CalculoValorLocacaoTest {
 
     @Before
     public void setup() {
-        service = new LocacaoService(); // instancia da classe que quero testar
-        // Essa instancia será aplicada antes de cada @Test
+        service = new LocacaoService(); // instancia da classe que quero testar (será aplicada antes de cada @Test)
+        LocacaoDAO dao = new LocacaoDAOFake();
+        service.setLocacaoDAO(dao);
     }
 
     private static Filme filme1 = umFilme().agora(); // new Filme("Filme 1", 2, 4.0);

@@ -5,7 +5,7 @@ https://www.udemy.com/course/testes-unitarios-em-java/
 
 Os testes unitários avaliam uma das menores porções de código, os métodos.
 
-Podemos criar n testes para esse mesmo método, onde para cada teste colocamos uma entradaa distinta que representa um cenário diferente.
+Podemos criar "n" testes para esse mesmo método, onde para cada teste colocamos uma entradaa distinta que representa um cenário diferente.
 
 `Entrada + Ação = Resultado`
 
@@ -24,6 +24,12 @@ A maioria dos testes podem ser divididos em 3 etapas:
     - facto de não ser lançado exceção alguma
 
 Na fase 3 (**validação**) é conde comparamos o resultado obtido com o resultado que era esperado para aquela ação sob as condições configuradas na fase inicial.
+
+Um Teste Unitário não deve ter dependência externa, como:
+- acesso ao BD
+- rede
+- arquivo
+- qualquer outra entidade externa ao código que queremos testar
 
 ## Testando sem Ferramenta
 
@@ -478,6 +484,21 @@ public void deveDividir_Strings() {
 Coberturas de testes não deve ser utilizado para medir a qualidade do código.
 É importante utilizar coberturas de teste para analizar as linhas vermelhas (as que não estão recebendo cobertura)
 
+Um Teste Unitário não deve ter dependência externa, como:
+- acesso ao BD
+- rede
+- arquivo
+- qualquer outra entidade externa ao código que queremos testar
+
+Conceito "Shift Left" :: devemos criar os testes o mais cedo possível, visando antecipar problemas.
+- Em `Testes Integrados`, uma solução seria virtualizar os serviços ainda não disponíveis.
+- Em `Testes unitários` TDD é a melhor forma, e quando precisar acessar algum serviço, criamos Mocks. 
+
+## Mocks :: Objetos falsos
+
+![Mocks - objetos falsos](imagens/mocks-objetos-falsos.png)
+
+Com os objetos falsos, criamos uma implementação apenas para atender as necessidades do teste.
 ## Git
 
 ```

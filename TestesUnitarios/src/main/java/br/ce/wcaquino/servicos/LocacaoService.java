@@ -17,6 +17,7 @@ import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
 public class LocacaoService {
 
 	private LocacaoDAO dao;
+	private SPCService spcService;
 
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException {
 
@@ -32,6 +33,11 @@ public class LocacaoService {
 			if (filme.getEstoque() == 0) {
 				throw new FilmeSemEstoqueException("Filme sem estoque");
 			}
+		}
+
+		// Consultar se user está no SPC
+		if (spcService.possuiNegativacao(usuario)) {
+			throw new LocadoraException("Usuário Negativado");
 		}
 
 		Locacao locacao = new Locacao();
@@ -80,5 +86,9 @@ public class LocacaoService {
 	// Assim o LocacaoService estará povoado com uma estancia de DAO fake
 	public void setLocacaoDAO(LocacaoDAO dao) {
 		this.dao = dao;
+	}
+
+	public void setSpcService(SPCService spc) {
+		spcService = spc;
 	}
 }

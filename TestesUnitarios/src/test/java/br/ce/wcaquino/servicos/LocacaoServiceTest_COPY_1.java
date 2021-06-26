@@ -21,6 +21,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+@Ignore // Ignora a execução desta classe de testes
 public class LocacaoServiceTest_COPY_1 {
 
     private LocacaoService service;

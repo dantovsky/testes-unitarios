@@ -18,6 +18,11 @@ public class UsuarioBuilder {
         return builder;
     }
 
+    public UsuarioBuilder conNome(String nome) {
+        usuario.setNome(nome);
+        return this; // retorna a instância do Builder
+    }
+
     public Usuario agora() {
         return usuario;
     }

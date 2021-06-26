@@ -14,6 +14,7 @@ import buildermaster.BuilderMaster;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -30,6 +31,8 @@ import static org.junit.Assert.assertThat;
 public class LocacaoServiceTest {
 
     private LocacaoService service;
+    private LocacaoDAO dao;
+    private SPCService spc;
 
     // Utilizacao das rules para que colete todos os erros e apresente todos de uma vez só
 
@@ -44,9 +47,16 @@ public class LocacaoServiceTest {
     @Before
     public void setup() {
         System.out.println("Before");
-        service = new LocacaoService(); // instancia da classe que quero testar (será aplicada antes de cada @Test)
-        LocacaoDAO dao = new LocacaoDAOFake();
-        service.setLocacaoDAO(dao);
+
+        service = new LocacaoService(); // instancia da classe que quero testar (será aplicada antes de cada @Test
+
+        // LocacaoDAO dao = new LocacaoDAOFake();
+        dao = Mockito.mock(LocacaoDAO.class);
+        service.setLocacaoDAO(dao); // Injecao do DAO
+
+        // Injecao do SPC
+        spc = Mockito.mock(SPCService.class); // instancia mockada
+        service.setSpcService(spc); // injecao do spc
     }
 
     @After
@@ -203,6 +213,24 @@ public class LocacaoServiceTest {
     // Aula 23 - Lib BuilderMaster, para automatizar a criação de builders
     public static void main(String[] args) {
         new BuilderMaster().gerarCodigoClasse(Locacao.class);
+    }
+
+    @Test
+    public void naoDeveAllugarFilmeParaNegativadoSPC() throws FilmeSemEstoqueException, LocadoraException {
+        // cenario
+        Usuario usuario = umUsuario().agora();
+        Usuario usuario2 = umUsuario().conNome("Usuario 2").agora();
+        List<Filme> filmes = Arrays.asList(umFilme().agora());
+
+        // Definir o comportamento no Mockito
+        Mockito.when(spc.possuiNegativacao(usuario)).thenReturn(true);
+        // quando spc possuiNegativacao passando um usuario for chamado, entao retorne true (por padrão ele retornava false)
+
+        exception.expect(LocadoraException.class);
+        exception.expectMessage("Usuário Negativado");
+
+        // acao
+        service.alugarFilme(usuario, filmes);
     }
 }
 

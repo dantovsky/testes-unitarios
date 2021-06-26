@@ -499,6 +499,12 @@ Conceito "Shift Left" :: devemos criar os testes o mais cedo possível, visando 
 ![Mocks - objetos falsos](imagens/mocks-objetos-falsos.png)
 
 Com os objetos falsos, criamos uma implementação apenas para atender as necessidades do teste.
+
+## Mockito
+
+Diferença entre Fakes e Mocks:
+- Mocks: é capaz de definir comportamentos dinamicos e verificar se ele fora utilizado conforme esperado
+
 ## Git
 
 ```

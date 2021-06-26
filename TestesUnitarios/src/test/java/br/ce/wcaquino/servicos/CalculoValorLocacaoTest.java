@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mockito;
 
 import javax.crypto.spec.PSource;
 import java.util.Arrays;
@@ -46,8 +47,13 @@ public class CalculoValorLocacaoTest {
     @Before
     public void setup() {
         service = new LocacaoService(); // instancia da classe que quero testar (será aplicada antes de cada @Test)
-        LocacaoDAO dao = new LocacaoDAOFake();
-        service.setLocacaoDAO(dao);
+
+        // LocacaoDAO dao = new LocacaoDAOFake();
+        LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
+        service.setLocacaoDAO(dao); // Injecao de dependencia
+
+        SPCService spc = Mockito.mock(SPCService.class);
+        service.setSpcService(spc);
     }
 
     private static Filme filme1 = umFilme().agora(); // new Filme("Filme 1", 2, 4.0);

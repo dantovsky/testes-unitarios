@@ -454,6 +454,31 @@ public class UserJsonTest {
     }
 }
 ```
+
+## Aula 25 - Inserindo com POST
+
+Exemplo:
+```java
+public class VerbosTest {
+
+    @Test // Aula 25 - POST com JSON
+    public void deveSalvarUsuario() {
+        given()
+            .log().all()
+            .contentType("application/json") // O server trata como um objeto JSON
+            .body("{ \"name\": \"Jose\", \"age\": 50 }")
+        .when()
+            .post("https://restapi.wcaquino.me/users")
+        .then()
+            .log().all()
+            .statusCode(201)
+            .body("id", is(notNullValue()))
+            .body("name", is("Jose"))
+            .body("age", is(50));
+    }
+}
+```
+
 # Commit
 
-git add . && git commit -m "Aulas 14 e 15 - Mensagem de erro, lista na raiz." 
+git add . && git commit -m "Verbos REST e URL Parametrizável." 

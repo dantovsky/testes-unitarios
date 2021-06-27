@@ -65,3 +65,13 @@ Respostas de erro do Cliente
 
 Respostas de erro do Servidor
 - 500 Internal server Error :: O server encontrou uma situação com a qual não sabe lidar
+
+## JUnit
+
+-> Questão - Diferença entre erros e falhas?
+
+Falhas (um erro que não passou): ocorrem quando é lançado uma exceção do tipo "Asssertion Error".  
+Ocorrem quando o teste é executado sem problemas, porém, alguma condição que era esperada não foi atendida (representado na forma de assertivas).
+
+Erros (qualquer outra exceção): o teste encontra um problema sem nem chegar nas assertivas.  
+Um erro acontece quando algum problema durante a execução do teste impede que o mesmo seja concluído, ou seja, quando ocorre alguma exceção não esperada e não tratada.

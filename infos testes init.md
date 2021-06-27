@@ -139,7 +139,7 @@ assertThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), 
 ## Aula 9 - Tratamento de exceções, parte 1
 
 ### Regras:
-1. não deve alugar filmes ssem estoque.
+1. não deve alugar filmes sem estoque.
 2. verificar filme que não está no estoque.
 
 -> Questão - Diferença entre erros e falhas?

@@ -7,6 +7,8 @@ import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -78,4 +80,33 @@ public class UserJsonTest {
             .body("filhos.name", hasSize(2))
         ;
     }
+
+    @Test // Mensagem de erro :: Caso em que o user não existe
+    public void deveRetornarErroUsuarioUnexistente() {
+        given()
+        .when()
+            .get("https://restapi.wcaquino.me/users/4")
+        .then()
+            .statusCode(404)
+            .body("error", is("Usuário inexistente"))
+        ;
+    }
+
+    @Test // Lista na raiz
+    public void deveVerificarListaRaiz() {
+        given()
+        .when()
+            .get("https://restapi.wcaquino.me/users")
+        .then()
+            .statusCode(200)
+            .body("$", hasSize(3)) // "$" indica a raiz do documento
+            .body("", hasSize(3)) // "" indica a raiz do documento
+            .body("name", hasItems("João da Silva", "Maria Joaquina", "Ana Júlia")) // "name" recebe uma lista contendo todos os nomes
+            .body("age[1]", is(25)) // a idade do 2º item (index 1) da lista de age é 25
+            .body("filhos.name", hasItem(Arrays.asList("Zezinho", "Luizinho"))) // uma lista dentro da lista raiz
+            .body("salary", contains(1234.5678f, 2500, null))
+        ;
+    }
+
+
 }
